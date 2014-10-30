@@ -28,9 +28,7 @@ end
 puts "\nWelcome to the Blackjack console game!"
 puts "\nPlease enter your name."
 puts
-
 player = gets.chomp.capitalize
-
 puts "\nHi, #{player}! Let's play Blackjack!"
 
 # Set up deck
@@ -48,9 +46,7 @@ end
 
 # Multiply number of decks in play
 
-decks = rand(2..5)
-deck *= decks
-
+deck *= rand(2..5)
 deck.shuffle!
 
 puts "\nWe're playing with #{decks} decks today."
@@ -70,7 +66,7 @@ dealer_tot = total(dealer_cards)
 
 # Reveal cards
 
-# Reveal dealer's second card in the following circumstance
+# Reveal dealer's second card under the following circumstance
 
 if dealer_tot == 21
   puts "\nThe dealer has the #{dealer_cards[0]}" \
@@ -84,13 +80,14 @@ elsif dealer_tot == 21 && player_tot == 21
        " and the #{player_cards[1]} worth #{player_tot} points."
   puts "\nYou and the dealer both got Blackjack. You tied."
   exit
-end
+else
 
-# Otherwise, hide delear's second card
+# Otherwise, hide dealer's second card
 
-puts "\nThe dealer has the #{dealer_cards[0]} and a face-down card."
+puts "\nThe dealer has the #{dealer_cards[1]} and a face-down card."
 puts "\nYou have the #{player_cards[0]}" \
      " and the #{player_cards[1]} worth #{player_tot} points."
+end
 
 # Player's turn
 
@@ -100,9 +97,9 @@ if player_tot == 21
 end
 
 while player_tot < 21
-  puts "\nDo you want to [h]it or [s]tay, #{player}? (Please enter 'h' or 's'.)"
+  puts "\nDo you want to [h]it or [s]tay, #{player}?" \
+       " (Please enter 'h' or 's'.)"
   puts
-
   player_turn = gets.chomp.downcase
 
   unless %w(h s).include?(player_turn)
@@ -110,24 +107,18 @@ while player_tot < 21
     next # skips to next iteration in loop
   end
 
-  if player_turn == 's'
-    puts "\nYou chose to 'stay.'"
-    break # breaks out of while loop
+  if response == 's'
+    puts "\nYou have #{player.total} points."
+    puts "\nYou chose to stay."
+    break
   end
 
-  if player_turn == 'h'
-    puts "\nYou chose to 'hit.'"
-
-    new_card = deck.pop
-
-    puts "\nYou were dealt the #{new_card}."
-
-    player_cards << new_card
-
-    player_tot = total(player_cards)
-
-    puts "\nYou have #{player_tot} points."
-  end
+  puts "\nYou chose to hit."
+  new_card = deck.pop
+  puts "\nYou were dealt the #{new_card}."
+  player_cards << new_card
+  player_tot = total(player_cards)
+  puts "\nYou have #{player_tot} points."
 
   if player_tot == 21
     puts "\nBlackjack! You won, #{player}! Congratulations!"
@@ -140,28 +131,27 @@ end
 
 # Dealer's turn
 
-puts "\nThe dealer has the #{dealer_cards[0]}."
-puts "\nThe dealer reveals the #{dealer_cards[1]} as her second card."
+puts "\nThe dealer has the #{dealer.cards[1]}."
+puts "\nThe dealer reveals the #{dealer.cards[0]} as her second card."
+puts "\nThe dealer has #{dealer.total} points."
 
 while dealer_tot < 17
   new_card = deck.pop
-
   puts "\nThe dealer drew the #{new_card}."
-
   dealer_cards << new_card
-
   dealer_tot = total(dealer_cards)
-
   puts "\nThe dealer has #{dealer_tot} points."
-
   if dealer_tot == 21
-    puts "\nSorry, #{player}. The dealer hit Blackjack. Better luck next time."
+    puts "\nSorry, #{player}. The dealer hit Blackjack." \
+         ' Better luck next time.'
     exit
   elsif dealer_tot > 21
     puts "\nThe dealer busted. Congratulations, #{player}! You won."
     exit
   end
 end
+
+puts "\nThe dealer stays."
 
 # Comparing the players cards and the dealers cards
 
