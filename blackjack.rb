@@ -48,6 +48,7 @@ end
 
 deck *= rand(2..5)
 deck.shuffle!
+decks = deck.size / 52
 
 puts "\nWe're playing with #{decks} decks today."
 
@@ -82,11 +83,11 @@ elsif dealer_tot == 21 && player_tot == 21
   exit
 else
 
-# Otherwise, hide dealer's second card
+  # Otherwise, hide dealer's second card
 
-puts "\nThe dealer has the #{dealer_cards[1]} and a face-down card."
-puts "\nYou have the #{player_cards[0]}" \
-     " and the #{player_cards[1]} worth #{player_tot} points."
+  puts "\nThe dealer has the #{dealer_cards[1]} and a face-down card."
+  puts "\nYou have the #{player_cards[0]}" \
+       " and the #{player_cards[1]} worth #{player_tot} points."
 end
 
 # Player's turn
@@ -107,8 +108,8 @@ while player_tot < 21
     next # skips to next iteration in loop
   end
 
-  if response == 's'
-    puts "\nYou have #{player.total} points."
+  if player_turn == 's'
+    puts "\nYou have #{player_tot} points."
     puts "\nYou chose to stay."
     break
   end
@@ -131,9 +132,9 @@ end
 
 # Dealer's turn
 
-puts "\nThe dealer has the #{dealer.cards[1]}."
-puts "\nThe dealer reveals the #{dealer.cards[0]} as her second card."
-puts "\nThe dealer has #{dealer.total} points."
+puts "\nThe dealer has the #{dealer_cards[1]}."
+puts "\nThe dealer reveals the #{dealer_cards[0]} as her second card."
+puts "\nThe dealer has #{dealer_tot} points."
 
 while dealer_tot < 17
   new_card = deck.pop

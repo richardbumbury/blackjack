@@ -117,7 +117,7 @@ class Blackjack
 
   def initialize
     @deck = Deck.new
-    @player = Player.new("Player_1")
+    @player = Player.new('Player_1')
     @dealer = Dealer.new
   end
 
@@ -168,7 +168,7 @@ class Blackjack
       replay?
     end
 
-    while !player.busted?
+    begin
       puts "\nDo you want to [h]it or [s]tay, #{player.name}?" \
            " (Please enter 'h' or 's'.)"
       puts
@@ -198,7 +198,7 @@ class Blackjack
         puts "\nSorry, #{player.name}. You busted. Better luck next time."
         replay?
       end
-    end
+    end until player.busted?
   end
 
   def dealer_turn
@@ -241,8 +241,8 @@ class Blackjack
   end
 
   def replay?
-    response = ""
-    while response != "y"
+    response = ''
+    while response != 'y'
       puts "\nWould you like to play again, #{player.name}?" \
            " (Please enter 'y' or 'n'.)"
       puts
@@ -253,7 +253,7 @@ class Blackjack
         next
       end
 
-      if response == "y"
+      if response == 'y'
         puts "\nLoading new game..."
         sleep(3)
         deck = Deck.new
@@ -268,7 +268,7 @@ class Blackjack
   end
 
   def run
-    system "clear"
+    system 'clear'
     puts "\nWelcome to the Blackjack console game!"
     puts "\nWe're playing with #{deck.shoe_size} decks."
     player_name
