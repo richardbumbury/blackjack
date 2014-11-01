@@ -28,7 +28,7 @@ class Deck
       end
     end
     multiply_deck
-    shuffle
+    shuffle!
   end
 
   def multiply_deck
@@ -39,7 +39,7 @@ class Deck
     @cards.size / 52
   end
 
-  def shuffle
+  def shuffle!
     cards.shuffle!
   end
 
